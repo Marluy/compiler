@@ -1,0 +1,37 @@
++---------+
+| DE BASE |
++---------+
+
+<programme> ::= procedure principale() <seqInst> finproc <FINDEFICHIER>
+<seqInst> ::= <inst> { <inst> }
+<inst> ::= <affectation> ; | <instSi>
+<affectation> ::= <variable> = <expression>
+<expression> ::= <facteur> { <opBinaire> <facteur> }
+<facteur> ::= <nombre> | <variable> | - <facteur> | non <facteur> | ( <expression> )
+<opBinaire> ::= + | - | * | / | == | != | < | <= | > | >= | et | ou
+<instSi> ::= si ( <expression> ) <seqInst> finsi
+
++---------------+
+| A ajouter N°1 |
++---------------+
+
+<inst> ::= <affectation> ; | <instSiRiche> | <instTantQue> | <instRepeter> ; | <instPour> |
+<instEcrire> ; | <instLire> ;
+<instSiRiche> ::= si (<expression>) <seqInst> { sinonsi (<expression>) <seqInst> } [sinon <seqInst>] finsi
+<instTantQue> ::= tantque ( <expression> ) <seqInst> fintantque
+<instRepeter> ::= repeter <seqInst> jusqua ( <expression> )
+<instPour> ::= pour ( [ <affectation> ] ; <expression> ; [ <affectation> ] ) <seqInst> finpour
+<instEcrire> ::= ecrire ( <expression> | <chaine> { , <expression> | <chaine> } )
+<instLire> ::= lire ( <variable> { , <variable> } )
+
++---------------+
+| A ajouter N°5 |
++---------------+
+
+<expression> ::= <terme> { + <terme> | - <terme> }
+<terme> ::= <facteur> { * <facteur> | / <facteur> }
+<facteur> ::= <entier> | <variable> | - <expBool> | non <expBool> | ( <expBool> )
+<expBool> ::= <relationET> { ou <relationEt> }
+<relationEt> ::= <relation> { et <relation> }
+<relation> ::= <expression> { <opRel> <expression> }
+<opRel> ::= == | != | < | <= | > | >=
