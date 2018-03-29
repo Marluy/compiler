@@ -21,7 +21,7 @@ public:
     virtual int executer() = 0; // Méthode pure (non implémentée) qui rend la classe abstraite
 
     virtual void ajoute(Noeud* instruction) {
-	throw OperationInterditeException();
+        throw OperationInterditeException();
     }
 
     virtual ~Noeud() {
@@ -99,48 +99,52 @@ private:
     Noeud* m_sequence;
 };
 
-class NoeudInstTq : public Noeud
-{
+////////////////////////////////////////////////////////////////////////////////
+
+class NoeudInstTq : public Noeud {
 public:
     NoeudInstTq(Noeud* condition, Noeud * sequence);
     int executer();
 
 private:
     Noeud* m_condition;
-    Noeud* m_sequence;      
+    Noeud* m_sequence;
 };
 
-class NoeudInstSiRiche : public Noeud 
-{
-public :
+////////////////////////////////////////////////////////////////////////////////
+
+class NoeudInstSiRiche : public Noeud {
+public:
     NoeudInstSiRiche(Noeud* cond, Noeud* seqVrai, Noeud* seqFaux);
     int executer();
     void setSeqFausse(Noeud * noeud);
 
-private :
+private:
     Noeud* m_condition;
     Noeud* m_sequenceVraie;
     Noeud* m_sequenceFausse;
 
 };
 
-class NoeudInstRpt : public Noeud
-{
+////////////////////////////////////////////////////////////////////////////////
+
+class NoeudInstRpt : public Noeud {
 public:
     NoeudInstRpt(Noeud* condition, Noeud * sequence);
     int executer();
 
 private:
     Noeud* m_condition;
-    Noeud* m_sequence;      
+    Noeud* m_sequence;
 };
 
-class NoeudInstPr : public Noeud
-{
+////////////////////////////////////////////////////////////////////////////////
+
+class NoeudInstPr : public Noeud {
 public:
     NoeudInstPr(Noeud* initialisation, Noeud* condition, Noeud* incrementation, Noeud* sequence);
     int executer();
-    
+
 private:
     Noeud* m_initialisation;
     Noeud* m_condition;
@@ -148,4 +152,15 @@ private:
     Noeud* m_sequence;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+
+class NoeudInstLire : public Noeud {
+public:
+    NoeudInstLire();
+    int executer();
+    void ajoute(Noeud* var);
+    
+private:
+    vector<Noeud*> m_variables;
+};
 #endif /* ARBREABSTRAIT_H */
