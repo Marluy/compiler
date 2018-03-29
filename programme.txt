@@ -22,6 +22,6 @@ procedure principale()
 
     repeter
         x = x + 1;
-    jusqua(x > 5)
+    jusqua(x > 5);
 finproc
 # Commentaire Final

@@ -164,4 +164,17 @@ public:
 private:
     vector<Noeud*> m_variables;
 };
+
+////////////////////////////////////////////////////////////////////////////////
+
+class NoeudInstEcrire : public Noeud
+{
+public:
+    NoeudInstEcrire();
+    int executer();
+    void ajoute(Noeud* var);
+    
+private:
+    vector<Noeud*> m_variables;
+};
 #endif /* ARBREABSTRAIT_H */

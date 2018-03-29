@@ -4,6 +4,7 @@
 #include "SymboleValue.h"
 #include "Exceptions.h"
 #include <iostream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -32,9 +33,13 @@ NoeudAffectation::NoeudAffectation(Noeud* variable, Noeud* expression)
 : m_variable(variable), m_expression(expression) {
 }
 
-int NoeudAffectation::executer() {
+int NoeudAffectation::executer()
+{
+
     int valeur = m_expression->executer(); // On exécute (évalue) l'expression
     ((SymboleValue*) m_variable)->setValeur(valeur); // On affecte la variable
+    
+    
     return 0; // La valeur renvoyée ne représente rien !
 }
 
@@ -177,5 +182,32 @@ int NoeudInstLire::executer() {
 }
 
 void NoeudInstLire::ajoute(Noeud* var){
+    m_variables.push_back(var);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// NoeudInstEcrire
+////////////////////////////////////////////////////////////////////////////////
+
+NoeudInstEcrire::NoeudInstEcrire() : m_variables() {}
+
+int NoeudInstEcrire::executer() {
+
+    for (auto p : m_variables)
+    {
+        if(typeid(*p)==typeid(SymboleValue) && *((SymboleValue*)p)== "<CHAINE>" )
+	{
+	    string str(((SymboleValue*)p)->getChaine());
+	    str = str.erase(0, 1);
+	    str.pop_back();
+	    
+	    cout << str << endl;
+	}
+	else cout << p->executer();
+    }
+}
+
+void NoeudInstEcrire::ajoute(Noeud* var){
     m_variables.push_back(var);
 }
