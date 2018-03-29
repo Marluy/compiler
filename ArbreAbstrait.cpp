@@ -172,3 +172,20 @@ int NoeudInstPr::executer()
     
     return 0;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// NoeudInstPour
+////////////////////////////////////////////////////////////////////////////////
+
+NoeudInstEcrire::NoeudInstEcrire(vector<Noeud*> alire) : m_aEcrire(alire)
+{}
+
+int NoeudInstEcrire::executer()
+{
+    for(auto p : m_aEcrire)
+    {
+	p->executer();
+	if(typeid(*p) == typeid(SymboleValue) && *((SymboleValue*)p) == "<CHAINE>" ) cout << p->executer();
+    }
+}

@@ -7,6 +7,7 @@
 #include <vector>
 #include <iostream>
 #include <iomanip>
+#include <typeinfo>
 using namespace std;
 
 #include "Symbole.h"
@@ -148,4 +149,13 @@ private:
     Noeud* m_sequence;
 };
 
+class NoeudInstEcrire : public Noeud
+{
+public:
+    NoeudInstEcrire(vector<Noeud*> aEcrire);
+    int executer();
+    
+private:
+    vector<Noeud*> m_aEcrire;
+};
 #endif /* ARBREABSTRAIT_H */

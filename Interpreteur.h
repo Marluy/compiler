@@ -43,6 +43,7 @@ private:
     Noeud* instSiRiche();
     Noeud* instRepeter();
     Noeud* instPour();
+    Noeud* instEcrire();
     
     // outils pour simplifier l'analyse syntaxique
     void tester(const string & symboleAttendu) const throw (SyntaxeException); // Si symbole courant != symboleAttendu, on lève une exception

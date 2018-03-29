@@ -15,8 +15,7 @@
 | A ajouter N°1 |
 +---------------+
 
-<inst> ::= <affectation> ; | <instSiRiche> | <instTantQue> | <instRepeter> ; | <instPour> |
-<instEcrire> ; | <instLire> ;
+<inst> ::= <affectation> ; | <instSiRiche> | <instTantQue> | <instRepeter> ; | <instPour> | <instEcrire> ; | <instLire> ;
 <instSiRiche> ::= si (<expression>) <seqInst> { sinonsi (<expression>) <seqInst> } [sinon <seqInst>] finsi
 <instTantQue> ::= tantque ( <expression> ) <seqInst> fintantque
 <instRepeter> ::= repeter <seqInst> jusqua ( <expression> )
