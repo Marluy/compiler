@@ -27,6 +27,7 @@
                    projectFiles="true">
       <itemPath>a</itemPath>
       <itemPath>bnf.txt</itemPath>
+      <itemPath>lire_ecrire.txt</itemPath>
       <itemPath>motsCles.txt</itemPath>
       <itemPath>programme.txt</itemPath>
     </logicalFolder>
@@ -101,6 +102,8 @@
       </item>
       <item path="bnf.txt" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="lire_ecrire.txt" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="motsCles.txt" ex="false" tool="3" flavor2="0">
@@ -157,6 +160,8 @@
       <item path="a" ex="false" tool="3" flavor2="0">
       </item>
       <item path="bnf.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lire_ecrire.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -6,6 +6,7 @@
 #include "Exceptions.h"
 #include "TableSymboles.h"
 #include "ArbreAbstrait.h"
+#include <iostream>
 
 class Interpreteur {
 public:
@@ -43,7 +44,7 @@ private:
     Noeud* instSiRiche();
     Noeud* instRepeter();
     Noeud* instPour();
-    Noeud* instEcrire();
+    Noeud* instLire();
     
     // outils pour simplifier l'analyse syntaxique
     void tester(const string & symboleAttendu) const throw (SyntaxeException); // Si symbole courant != symboleAttendu, on lève une exception
