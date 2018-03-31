@@ -15,7 +15,8 @@ using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class Noeud {
+class Noeud
+{
     // Classe abstraite dont dériveront toutes les classes servant à représenter l'arbre abstrait
     // Remarque : la classe ne contient aucun constructeur
 public:
@@ -24,7 +25,9 @@ public:
     virtual void ajoute(Noeud* instruction) {
         throw OperationInterditeException();
     }
-
+    
+    virtual void traduitEnCPP(ostream & cout, unsigned int indentation) const = 0;
+    
     virtual ~Noeud() {
     } // Présence d'un destructeur virtuel conseillée dans les classes abstraites
 };
@@ -40,6 +43,7 @@ public:
     ~NoeudSeqInst() {
     } // A cause du destructeur virtuel de la classe Noeud
     int executer(); // Exécute chaque instruction de la séquence
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const;
     void ajoute(Noeud* instruction); // Ajoute une instruction à la séquence
 
 private:
@@ -53,6 +57,7 @@ class NoeudAffectation : public Noeud {
     //  composé de 2 fils : la variable et l'expression qu'on lui affecte
 public:
     NoeudAffectation(Noeud* variable, Noeud* expression); // construit une affectation
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const;
 
     ~NoeudAffectation() {
     } // A cause du destructeur virtuel de la classe Noeud
@@ -75,7 +80,8 @@ public:
     ~NoeudOperateurBinaire() {
     } // A cause du destructeur virtuel de la classe Noeud
     int executer(); // Exécute (évalue) l'opération binaire)
-
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const;
+    
 private:
     Symbole m_operateur;
     Noeud* m_operandeGauche;
@@ -94,6 +100,7 @@ public:
     ~NoeudInstSi() {
     } // A cause du destructeur virtuel de la classe Noeud
     int executer(); // Exécute l'instruction si : si condition vraie on exécute la séquence
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const;
 
 private:
     Noeud* m_condition;
@@ -102,11 +109,13 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class NoeudInstTq : public Noeud {
+class NoeudInstTq : public Noeud
+{
 public:
     NoeudInstTq(Noeud* condition, Noeud * sequence);
     int executer();
-
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const;
+    
 private:
     Noeud* m_condition;
     Noeud* m_sequence;
@@ -114,11 +123,13 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class NoeudInstSiRiche : public Noeud {
+class NoeudInstSiRiche : public Noeud
+{
 public:
     NoeudInstSiRiche(Noeud* cond, Noeud* seqVrai, Noeud* seqFaux);
     int executer();
     void setSeqFausse(Noeud * noeud);
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const; 
 
 private:
     Noeud* m_condition;
@@ -129,10 +140,12 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class NoeudInstRpt : public Noeud {
+class NoeudInstRpt : public Noeud
+{
 public:
     NoeudInstRpt(Noeud* condition, Noeud * sequence);
     int executer();
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const; 
 
 private:
     Noeud* m_condition;
@@ -141,10 +154,12 @@ private:
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class NoeudInstPr : public Noeud {
+class NoeudInstPr : public Noeud
+{
 public:
     NoeudInstPr(Noeud* initialisation, Noeud* condition, Noeud* incrementation, Noeud* sequence);
     int executer();
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const; 
 
 private:
     Noeud* m_initialisation;
@@ -159,6 +174,7 @@ class NoeudInstLire : public Noeud {
 public:
     NoeudInstLire();
     int executer();
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const; 
     void ajoute(Noeud* var);
     
 private:
@@ -172,6 +188,7 @@ class NoeudInstEcrire : public Noeud
 public:
     NoeudInstEcrire();
     int executer();
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const; 
     void ajoute(Noeud* var);
     
 private:

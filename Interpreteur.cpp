@@ -4,15 +4,32 @@
 using namespace std;
 
 Interpreteur::Interpreteur(ifstream & fichier) :
-m_lecteur(fichier), m_table(), m_arbre(NULL) {
-}
+m_lecteur(fichier), m_table(), m_arbre(NULL)
+{}
 
-void Interpreteur::analyse() {
+void Interpreteur::analyse()
+{
     m_arbre = programme(); // on lance l'analyse de la première règle
 }
 
-void Interpreteur::tester(const string & symboleAttendu) const throw (SyntaxeException) {
-    // Teste si le symbole courant est égal au symboleAttendu... Si non, lève une exception
+void Interpreteur::traduitEnCPP(ostream & cout) const
+{
+    cout << "#include <iostream>" << endl << endl;
+    cout << "int main()" << endl << "{" << endl;
+    
+    cout << setw(1) << "\t" << "int ";
+    for(int i(0) ; i < m_table.getTaille() ; i++)
+	if(m_table[i] == "<VARIABLE>") cout << m_table[i].getChaine() << "(0), ";
+    cout << '\010' << '\010' << ";" << endl << endl;
+    
+    getArbre()->traduitEnCPP(cout,1);
+    
+    cout << endl << setw(1) << "\t" << "return 0;" << endl ;
+    cout << "}" << endl ;
+}
+
+void Interpreteur::tester(const string & symboleAttendu) const throw (SyntaxeException)
+{// Teste si le symbole courant est égal au symboleAttendu... Si non, lève une exception
     static char messageWhat[256];
     if (m_lecteur.getSymbole() != symboleAttendu) {
         sprintf(messageWhat,
@@ -23,15 +40,15 @@ void Interpreteur::tester(const string & symboleAttendu) const throw (SyntaxeExc
     }
 }
 
-void Interpreteur::testerEtAvancer(const string & symboleAttendu) throw (SyntaxeException) {
-    // Teste si le symbole courant est égal au symboleAttendu... Si oui, avance, Sinon, lève une exception
+void Interpreteur::testerEtAvancer(const string & symboleAttendu) throw (SyntaxeException)
+{// Teste si le symbole courant est égal au symboleAttendu... Si oui, avance, Sinon, lève une exception
     tester(symboleAttendu);
     m_lecteur.avancer();
 }
 
-void Interpreteur::erreur(const string & message) const throw (SyntaxeException) {
-    // Lève une exception contenant le message et le symbole courant trouvé
-    // Utilisé lorsqu'il y a plusieurs symboles attendus possibles...
+void Interpreteur::erreur(const string & message) const throw (SyntaxeException)
+{// Lève une exception contenant le message et le symbole courant trouvé
+ // Utilisé lorsqu'il y a plusieurs symboles attendus possibles...
     static char messageWhat[256];
     sprintf(messageWhat,
             "Ligne %d, Colonne %d - Erreur de syntaxe - %s - Symbole trouvé : %s",
@@ -39,8 +56,8 @@ void Interpreteur::erreur(const string & message) const throw (SyntaxeException)
     throw SyntaxeException(messageWhat);
 }
 
-Noeud* Interpreteur::programme() {
-    // <programme> ::= procedure principale() <seqInst> finproc FIN_FICHIER
+Noeud* Interpreteur::programme()
+{// <programme> ::= procedure principale() <seqInst> finproc FIN_FICHIER
     testerEtAvancer("procedure");
     testerEtAvancer("principale");
     testerEtAvancer("(");
@@ -51,8 +68,8 @@ Noeud* Interpreteur::programme() {
     return sequence;
 }
 
-Noeud* Interpreteur::seqInst() {
-    // <seqInst> ::= <inst> { <inst> }
+Noeud* Interpreteur::seqInst()
+{// <seqInst> ::= <inst> { <inst> }
     NoeudSeqInst* sequence = new NoeudSeqInst();
     do {
         sequence->ajoute(inst());
@@ -68,8 +85,8 @@ Noeud* Interpreteur::seqInst() {
     return sequence;
 }
 
-Noeud* Interpreteur::inst() {
-    // <inst> ::= <affectation>  ; | <instSi>
+Noeud* Interpreteur::inst()
+{// <inst> ::= <affectation> ; | <instSiRiche> | <instTantQue> | <instRepeter> ; | <instPour> | <instEcrire> ; | <instLire> ;
     if (m_lecteur.getSymbole() == "<VARIABLE>")
     {
         Noeud *affect = affectation();
@@ -100,8 +117,8 @@ Noeud* Interpreteur::inst() {
     else erreur("Instruction incorrecte");
 }
 
-Noeud* Interpreteur::affectation() {
-    // <affectation> ::= <variable> = <expression> 
+Noeud* Interpreteur::affectation()
+{// <affectation> ::= <variable> = <expression> 
     tester("<VARIABLE>");
     Noeud* var = m_table.chercheAjoute(m_lecteur.getSymbole()); // La variable est ajoutée à la table et on la mémorise
     m_lecteur.avancer();
@@ -141,27 +158,27 @@ Noeud* Interpreteur::terme()
 
 Noeud* Interpreteur::facteur()
 {// <facteur> ::= <entier> | <variable> | - <expBool> | non <expBool> | ( <expBool> )
-    // <facteur> ::= <entier> | <variable> | - <expBool> | non <expBool> | ( <expBool> )
     Noeud* fact = NULL;
     if (m_lecteur.getSymbole() == "<VARIABLE>" || m_lecteur.getSymbole() == "<ENTIER>")
     {// <entier> | <variable>
 	fact = m_table.chercheAjoute(m_lecteur.getSymbole()); // on ajoute la variable ou l'entier à la table
+	//fact = expBool();
 	m_lecteur.avancer();
     }
     else if (m_lecteur.getSymbole() == "-")
-    { // - <facteur>
+    { // - <expBool>
 	m_lecteur.avancer();
 	// on représente le moins unaire (- facteur) par une soustraction binaire (0 - facteur)
 	fact = new NoeudOperateurBinaire(Symbole("-"), m_table.chercheAjoute(Symbole("0")), facteur());
     }
     else if (m_lecteur.getSymbole() == "non")
-    { // non <facteur>
+    { // non <expBool>
 	m_lecteur.avancer();
 	// on représente le moins unaire (- facteur) par une soustractin binaire (0 - facteur)
 	fact = new NoeudOperateurBinaire(Symbole("non"), expBool(), NULL);
     }
     else if (m_lecteur.getSymbole() == "(")
-    { // expression parenthésée
+    { // (<expBool>)
 	m_lecteur.avancer();
 	fact = expBool();
 	testerEtAvancer(")");
@@ -218,7 +235,8 @@ Noeud* Interpreteur::relation()
     return rel;
 }
 
-Noeud* Interpreteur::instSi() {// <instSi> ::= si ( <expression> ) <seqInst> finsi
+Noeud* Interpreteur::instSi()
+{// <instSi> ::= si ( <expression> ) <seqInst> finsi
     testerEtAvancer("si");
     testerEtAvancer("(");
     Noeud* condition = expression(); // On mémorise la condition
@@ -228,10 +246,11 @@ Noeud* Interpreteur::instSi() {// <instSi> ::= si ( <expression> ) <seqInst> fin
     return new NoeudInstSi(condition, sequence); // Et on renvoie un noeud Instruction Si
 }
 
-Noeud* Interpreteur::instTantQue() {// <instTantQue> ::= tantque ( <expression> ) <seqInst> fintantque
+Noeud* Interpreteur::instTantQue()
+{// <instTantQue> ::= tantque ( <expression> ) <seqInst> fintantque
     testerEtAvancer("tantque");
     testerEtAvancer("(");
-    Noeud* condition = expression();
+    Noeud* condition = expBool();//expression();
     testerEtAvancer(")");
     Noeud* sequence = seqInst();
     testerEtAvancer("fintantque");
@@ -242,7 +261,7 @@ Noeud* Interpreteur::instTantQue() {// <instTantQue> ::= tantque ( <expression> 
 Noeud* Interpreteur::instSiRiche() {//<instSiRiche> ::= si( <expression> ) <seqInst> { sinonsi (<expression>) <seqInst> } [sinon <seqInst>] finsi
     testerEtAvancer("si");
     testerEtAvancer("(");
-    Noeud* conditionVraie = expression();
+    Noeud* conditionVraie = expBool();
     testerEtAvancer(")");
 
     Noeud* sequenceVraie = seqInst();
@@ -252,7 +271,7 @@ Noeud* Interpreteur::instSiRiche() {//<instSiRiche> ::= si( <expression> ) <seqI
     while (m_lecteur.getSymbole() == "sinonsi") {
         testerEtAvancer("sinonsi");
         testerEtAvancer("(");
-        Noeud* conditionSinon = expression();
+        Noeud* conditionSinon = expBool();
         testerEtAvancer(")");
         Noeud* sequenceSinon = seqInst();
 
@@ -276,7 +295,7 @@ Noeud* Interpreteur::instRepeter() {//<instRepeter> ::= repeter <seqInst> jusqua
     Noeud* sequence = seqInst();
     testerEtAvancer("jusqua");
     testerEtAvancer("(");
-    Noeud* condition = expression();
+    Noeud* condition = expBool();
     testerEtAvancer(")");
 
     return new NoeudInstRpt(condition, sequence);
@@ -290,7 +309,7 @@ Noeud* Interpreteur::instPour() {//<instPour> ::= pour ( [ <affectation> ] ; <ex
     if (m_lecteur.getSymbole() != ";") init = affectation();
     testerEtAvancer(";");
 
-    Noeud* condition = expression();
+    Noeud* condition = expBool();
     testerEtAvancer(";");
 
     Noeud* increment = NULL;

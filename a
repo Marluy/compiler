@@ -1,6 +1,35 @@
 
 procedure principale()
-    
- i = (1 + 1 == 2);
+
+    i = 0;
+
+    si(i)
+	ecrire("we are number one Hey !");
+	y = 0;
+	repeter
+	    y = y + 1;
+	jusqua(y > 9);
+    sinonsi(non (i ou 1))
+	j = 10;
+	tantque( j > 0 )
+	    j = j - 1;
+	fintantque
+
+	m = 0;
+	lire(m);
+	ecrire("m = ", m);
+    sinon
+	nbr1 = 2;
+	nbr2 = -4;
+	x = 0;
+	pour( ; x < 10 ; x = x + 2)
+	    x = x - 1;
+	finpour
+	lire(nbr1, nbr2);
+	x = x * ( nbr1 * (nbr2 + x)) + 5 + 5*(10+5)*9;
+	x = 5 + (0 - x) + 0 + 1 + 3;
+    finsi
+
+ 
 
 finproc
