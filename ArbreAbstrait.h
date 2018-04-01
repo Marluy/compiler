@@ -28,6 +28,8 @@ public:
     
     virtual void traduitEnCPP(ostream & cout, unsigned int indentation) const = 0;
     
+    static int getPriority_Cpp(Symbole s);  
+    
     virtual ~Noeud() {
     } // Présence d'un destructeur virtuel conseillée dans les classes abstraites
 };
@@ -77,12 +79,13 @@ public:
     NoeudOperateurBinaire(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit);
     // Construit une opération binaire : operandeGauche operateur OperandeDroit
 
-    ~NoeudOperateurBinaire() {
-    } // A cause du destructeur virtuel de la classe Noeud
+    ~NoeudOperateurBinaire() {} // A cause du destructeur virtuel de la classe Noeud
     int executer(); // Exécute (évalue) l'opération binaire)
     void traduitEnCPP(ostream & cout, unsigned int indentation) const;
     
 private:
+    inline std::string getOperateur() const { return m_operateur.getChaine(); }
+    
     Symbole m_operateur;
     Noeud* m_operandeGauche;
     Noeud* m_operandeDroit;

@@ -16,7 +16,7 @@ public:
 	  int  executer();         // exécute le SymboleValue (revoie sa valeur !)
 	  void traduitEnCPP(ostream & cout, unsigned int indentation) const;
 	  inline void setValeur(int valeur)   { this->m_valeur=valeur; m_defini=true;  } // accesseur
-	  inline bool estDefini()              { return m_defini;                       } // accesseur
+	  inline bool estDefini()             { return m_defini;                       } // accesseur
 
 	  friend ostream & operator << (ostream & cout, const SymboleValue & symbole); // affiche un symbole value sur cout
 

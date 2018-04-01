@@ -100,36 +100,41 @@ int NoeudOperateurBinaire::executer()
 
 void NoeudOperateurBinaire::traduitEnCPP(ostream & cout, unsigned int indentation) const
 {   
-    cout << "(";
-    if (m_operateur == "non")
-    {
-	cout << "!";
-	m_operandeGauche->traduitEnCPP(cout, indentation);
-    }
-    else if(m_operateur == "-" && typeid(*m_operandeGauche)==typeid(SymboleValue) && *((SymboleValue*)m_operandeGauche) == "0")
-    {
-	cout << "-";
-	m_operandeDroit->traduitEnCPP(cout, indentation);
-    }
-    else
-    {
-	if (m_operandeGauche != NULL)
-	{
-	    m_operandeGauche->traduitEnCPP(cout, indentation);
-	    cout << " ";
-	}
 	
-	if	(m_operateur == "et")   cout << "&&";
-	else if (m_operateur == "ou")   cout << "||";
-	else			    cout << m_operateur.getChaine();
-
-	if (m_operandeDroit != NULL)
-	{
-	    cout << " ";
-	    m_operandeDroit->traduitEnCPP(cout, indentation);
-	}
+    // A gauche
+    if (m_operandeGauche != NULL)
+    {
+	// On regarde si l'operation est prioritaire sur la precedente
+	// Si oui, on mettera des parenthèses
+	
+	bool bracket = typeid(*m_operandeGauche) == typeid(NoeudOperateurBinaire) &&
+		       getPriority_Cpp(m_operateur) > getPriority_Cpp(((NoeudOperateurBinaire*)m_operandeGauche)->getOperateur());
+	
+	if(bracket) cout << "(";
+	m_operandeGauche->traduitEnCPP(cout, indentation);
+	if(bracket) cout << ")";
+	cout << " ";
     }
-    cout << ")";
+
+	 if(m_operateur == "non")   cout << '\010' << "!";
+    else if(m_operateur == "et")    cout << "&&";
+    else if(m_operateur == "ou")    cout << "||";
+    else			    cout << m_operateur.getChaine();
+
+    // A droite
+    if (m_operandeDroit != NULL)
+    {
+	cout << " ";
+	// On regarde si l'operation est prioritaire sur la precedente
+	// Si oui, on mettera des parenthèses
+	
+	bool bracket = typeid(*m_operandeDroit) == typeid(NoeudOperateurBinaire) &&
+		       getPriority_Cpp(m_operateur) > getPriority_Cpp(((NoeudOperateurBinaire*)m_operandeDroit)->getOperateur());
+	
+	if(bracket) cout << "(";
+	m_operandeDroit->traduitEnCPP(cout, indentation);
+	if(bracket) cout << ")";
+    }
 }
     
 ////////////////////////////////////////////////////////////////////////////////
@@ -389,4 +394,17 @@ void NoeudInstEcrire::traduitEnCPP(ostream & cout, unsigned int indentation) con
     }
     
     cout << " << endl;";
+}
+
+int Noeud::getPriority_Cpp(Symbole s)
+{
+	 if(s == "non")			return 7;
+    else if(s == "*"  || s == "/" )	return 6;
+    else if(s == "+"  || s == "-" )	return 5;
+    else if(s == ">=" || s == ">" ||
+	    s == "<=" || s == "<" )	return 4;
+    else if(s == "==" || s == "!=" )	return 3;
+    else if(s == "et")			return 2;
+    else if(s == "ou")			return 1;
+    else				return 0;
 }
