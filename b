@@ -1,10 +1,9 @@
 
 procedure principale()
-    j = 0;
+    j = 5;
     x = 1;
-    tantque( j + 1 ou x )
-        j = -1;
-	x = 0;
-    fintantque
+    a = 3
+	s = 0;
+	s = x + (a - a);
 
 finproc
