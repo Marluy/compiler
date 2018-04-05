@@ -41,7 +41,7 @@ private:
 	Noeud* terme();
 	Noeud* facteur(); // <facteur> ::= <entier>  |  <variable>  |  - <facteur>  | non <facteur> | ( <expression> )
 	// <opBinaire> ::= + | - | *  | / | < | > | <= | >= | == | != | et | ou
-	Noeud* chercheInst(); //méthode qui va chercher l'instruction suivante après une exception
+	void chercheInst(); //méthode qui va chercher l'instruction suivante après une exception
 	Noeud* expBool();
 	Noeud* relationET();
 	Noeud* relation();

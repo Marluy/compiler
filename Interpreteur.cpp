@@ -117,7 +117,7 @@ Noeud* Interpreteur::affectation() {// <affectation> ::= <variable> = <expressio
 		return new NoeudAffectation(var, exp); // On renvoie un noeud affectation
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
@@ -169,11 +169,11 @@ Noeud* Interpreteur::facteur() {// <facteur> ::= <entier> | <variable> | - <expB
 		return fact;
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
-Noeud* Interpreteur::chercheInst() {
+void Interpreteur::chercheInst() {
 	do {
 		m_lecteur.avancer();
 	} while (!(m_lecteur.getSymbole() == "<VARIABLE>" ||
@@ -185,7 +185,6 @@ Noeud* Interpreteur::chercheInst() {
 			m_lecteur.getSymbole() == "lire" ||
 			m_lecteur.getSymbole() == "<FINDEFICHIER>"));
 
-	return NULL;
 }
 
 Noeud* Interpreteur::expBool() {// <expBool> ::= <relationET> { ou <relationEt> }
@@ -247,7 +246,7 @@ Noeud* Interpreteur::instSi() {// <instSi> ::= si ( <expression> ) <seqInst> fin
 		return new NoeudInstSi(condition, sequence); // Et on renvoie un noeud Instruction Si
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 
 }
@@ -269,7 +268,7 @@ Noeud* Interpreteur::instTantQue() {// <instTantQue> ::= tantque ( <expression> 
 		return new NoeudInstTq(condition, sequence);
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
@@ -313,7 +312,7 @@ Noeud* Interpreteur::instSiRiche() {//<instSiRiche> ::= si( <expression> ) <seqI
 		return noeudRacine;
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
@@ -334,7 +333,7 @@ Noeud* Interpreteur::instRepeter() {//<instRepeter> ::= repeter <seqInst> jusqua
 		return new NoeudInstRpt(condition, sequence);
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
@@ -365,7 +364,7 @@ Noeud* Interpreteur::instPour() {//<instPour> ::= pour ( [ <affectation> ] ; <ex
 		return new NoeudInstPr(init, condition, increment, sequence);
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
@@ -398,7 +397,7 @@ Noeud* Interpreteur::instLire() {
 		return lire;
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
 
@@ -428,6 +427,6 @@ Noeud* Interpreteur::instEcrire() {// <instEcrire> ::= ecrire ( <expression> | <
 		return ecrire;
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		return chercheInst();
+		chercheInst();
 	}
 }
