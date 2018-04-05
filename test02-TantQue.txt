@@ -1,0 +1,9 @@
+#test du tantque
+procedure principale()
+	x = 1;
+	
+	tantque(x < 10)
+		x = x + 1;
+	fintantque
+
+finproc

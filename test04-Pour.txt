@@ -1,0 +1,9 @@
+#test du Pour
+procedure principale()
+
+	x = 0;
+	pour (; i < 10;)
+		x = x + i;
+	finpour
+
+finproc

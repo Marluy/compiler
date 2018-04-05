@@ -1,0 +1,8 @@
+#test du Ecrire
+procedure principale()
+
+	x = 1;
+	ecrire(x);
+
+finproc
+

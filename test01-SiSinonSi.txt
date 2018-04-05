@@ -1,0 +1,32 @@
+#test du SiSinonSi
+procedure principale()
+	x = 1;
+	
+	si(x == 1)
+		x = x + 1;
+	sinonsi (x > 1)
+		x = x * 2;
+	sinon
+		x = 1;
+	finsi
+
+	y = 2;
+
+	si(y == 1)
+		y = y + 1;
+	sinonsi (y > 1)
+		y = y * 2;
+	sinon
+		y = 1;
+	finsi
+
+	z = 0;
+
+	si(z == 1)
+		z = z + 1;
+	sinonsi (z > 1)
+		z = z * 2;
+	sinon
+		z = 1;
+	finsi
+finproc

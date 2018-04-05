@@ -1,0 +1,6 @@
+#test du Lire
+procedure principale()
+	
+	lire(x)); #Problème il faut 2 parenthèse pour lire ?????
+
+finproc
