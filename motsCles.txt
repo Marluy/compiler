@@ -13,6 +13,10 @@ repeter
 jusqua
 lire
 ecrire
+selon
+cas
+defaut
+finselon
 ;
 ,
 =

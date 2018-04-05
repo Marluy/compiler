@@ -1,0 +1,14 @@
+procedure principale()
+
+    x = 1;
+
+    selon(x)
+	cas 1:
+	    y = 1;
+	cas -1:
+	    y = 1;
+	defaut:
+	    y = x;
+    finselon
+
+finproc

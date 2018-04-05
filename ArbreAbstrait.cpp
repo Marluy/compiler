@@ -5,6 +5,7 @@
 #include "Exceptions.h"
 #include <iostream>
 #include <typeinfo>
+#include <map>
 
 using namespace std;
 
@@ -339,6 +340,48 @@ void NoeudInstEcrire::traduitEnCPP(ostream & cout, unsigned int indentation) con
 	}
 
 	cout << " << endl;";
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// NoeudInstEcrire
+////////////////////////////////////////////////////////////////////////////////
+
+NoeudInstSelon::NoeudInstSelon(Noeud* variable)
+    : m_variable(variable), m_sequences(), m_defaut(NULL)
+{}
+
+
+void NoeudInstSelon::ajoute(Noeud* cas, Noeud* sequence)
+{
+    m_sequences.insert(pair<Noeud*, Noeud*>(cas, sequence));
+}
+
+int NoeudInstSelon::executer() {
+    return 0;
+}
+void NoeudInstSelon::traduitEnCPP(ostream & cout, unsigned int indentation) const {
+    cout << "switch(";
+    m_variable->traduitEnCPP(cout, 0);
+    cout << ")" << endl;
+    cout << setw(indentation) << "\t" << "{" << endl;
+    
+    for(auto p : m_sequences)
+    {
+	cout << setw(indentation+8) << "\t" << "case ";
+	p.first->traduitEnCPP(cout, 0);
+	cout << ":" << endl;
+	p.second->traduitEnCPP(cout, indentation+16);
+	cout << setw(indentation+16) << "\t" << "break;" << endl;
+    }
+    
+    if(m_defaut != NULL)
+    {
+	cout << setw(indentation+8) << "\t" << "default:" << endl;
+	m_defaut->traduitEnCPP(cout, indentation+16);
+	cout << setw(indentation+16) << "\t" << "break;" << endl;
+    }
+    cout << setw(indentation) << "\t" << "}" << endl;
 }
 
 int Noeud::getPriority_Cpp(Symbole s) {

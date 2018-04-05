@@ -37,14 +37,13 @@ private:
 	Noeud* seqInst(); // <seqInst> ::= <inst> { <inst> }
 	Noeud* inst(); // <inst> ::= <affectation> ; | <instSi>
 	Noeud* affectation(); // <affectation> ::= <variable> = <expression> 
-	Noeud* expression(); // <expression> ::= <facteur> { <opBinaire> <facteur> }
-	Noeud* terme();
-	Noeud* facteur(); // <facteur> ::= <entier>  |  <variable>  |  - <facteur>  | non <facteur> | ( <expression> )
-	// <opBinaire> ::= + | - | *  | / | < | > | <= | >= | == | != | et | ou
-	void chercheInst(); //méthode qui va chercher l'instruction suivante après une exception
-	Noeud* expBool();
-	Noeud* relationET();
-	Noeud* relation();
+	Noeud* expression(); // <expression> ::= <terme> { + <terme> | - <terme> }
+	Noeud* terme();	// <terme> ::= <facteur> { * <facteur> | / <facteur> }
+	Noeud* facteur(); // <facteur> ::= <entier> | <variable> | - <expBool> | non <expBool> | ( <expBool> )
+	Noeud* expBool();   // <expBool> ::= <relationET> { ou <relationEt> }
+	Noeud* relationET();	// <relationEt> ::= <relation> { et <relation> }
+	Noeud* relation();  // <relation> ::= <expression> { <opRel> <expression> }
+			    // <opRel> ::= == | != | < | <= | > | >=
 	Noeud* instSi(); // <instSi> ::= si ( <expression> ) <seqInst> finsi
 	Noeud* instTantQue(); // <instTantQue> ::= tantque ( <expression> ) <seqInst> fintantque
 	Noeud* instSiRiche(); // <instSiRiche> ::= si (<expression>) <seqInst> { sinonsi (<expression>) <seqInst> } [sinon <seqInst>] finsi
@@ -52,8 +51,10 @@ private:
 	Noeud* instPour(); // <instPour> ::= pour ( [ <affectation> ] ; <expression> ; [ <affectation> ] ) <seqInst> finpour
 	Noeud* instLire(); // <instLire> ::= lire ( <variable> { , <variable> } )
 	Noeud* instEcrire(); // <instEcrire> ::= ecrire ( <expression> | <chaine> { , <expression> | <chaine> } )
+	Noeud* instSelon(); // <instSelon> ::= selon(<expression>) cas <entier>|<variable> : <seqInst> {cas <entier>|<variable> : <seqInst> } [defaut: <seqInst>] finselon
 
 	// outils pour simplifier l'analyse syntaxique
+	void chercheInst(); //méthode qui va chercher l'instruction suivante après une exception
 	void tester(const string & symboleAttendu) const throw (SyntaxeException); // Si symbole courant != symboleAttendu, on lève une exception
 	void testerEtAvancer(const string & symboleAttendu) throw (SyntaxeException); // Si symbole courant != symboleAttendu, on lève une exception, sinon on avance
 	void erreur(const string & mess) const throw (SyntaxeException); // Lève une exception "contenant" le message mess

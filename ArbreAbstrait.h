@@ -5,6 +5,7 @@
 //  pour représenter l'arbre abstrait
 
 #include <vector>
+#include <map>
 #include <iostream>
 #include <iomanip>
 #include <typeinfo>
@@ -194,5 +195,19 @@ public:
 
 private:
 	vector<Noeud*> m_variables;
+};
+
+class NoeudInstSelon : public Noeud {
+public:
+    NoeudInstSelon(Noeud* variable);
+    int executer();
+    void traduitEnCPP(ostream & cout, unsigned int indentation) const;
+    void ajoute(Noeud* cas, Noeud* sequence);
+    inline void setDefaut(Noeud* noeud) {m_defaut = noeud;}
+
+private:
+    Noeud* m_variable;
+    map<Noeud*, Noeud*> m_sequences;
+    Noeud* m_defaut;
 };
 #endif /* ARBREABSTRAIT_H */
