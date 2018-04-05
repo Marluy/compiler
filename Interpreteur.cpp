@@ -374,24 +374,20 @@ Noeud* Interpreteur::instLire() {
 		NoeudInstLire* lire = new NoeudInstLire();
 
 		testerEtAvancer("lire");
+		tester("(");
 
-		testerEtAvancer("(");
+		Noeud* var = NULL;
+		
+		do {
+		    m_lecteur.avancer();
+		    tester("<VARIABLE>");
 
-		testerEtAvancer("<VARIABLE>");
-
-		Noeud* var = m_table.chercheAjoute(m_lecteur.getSymbole()); // La variable est ajoutée à la table et on la mémorise
-		m_lecteur.avancer();
-		lire->ajoute(var);
-		while (m_lecteur.getSymbole() == ",") {
-			m_lecteur.avancer();
-
-			testerEtAvancer("<VARIABLE>");
-
-			var = m_table.chercheAjoute(m_lecteur.getSymbole()); // La variable est ajoutée à la table et on la mémorise
-			m_lecteur.avancer();
-			lire->ajoute(var);
+		    var = m_table.chercheAjoute(m_lecteur.getSymbole()); // La variable est ajoutée à la table et on la mémorise
+		    lire->ajoute(var);
+		    m_lecteur.avancer();
 		}
-
+		while(m_lecteur.getSymbole() == ",");
+		
 		testerEtAvancer(")");
 
 		return lire;
@@ -407,7 +403,7 @@ Noeud* Interpreteur::instEcrire() {// <instEcrire> ::= ecrire ( <expression> | <
 
 		testerEtAvancer("ecrire");
 
-		testerEtAvancer("(");
+		tester("(");
 
 		do {
 			m_lecteur.avancer();

@@ -278,12 +278,11 @@ NoeudInstLire::NoeudInstLire() : m_variables() {
 
 int NoeudInstLire::executer() {
 	int valeur;
-
+	
 	for (auto var : m_variables) {
 		cin >> valeur;
 		cin.ignore(256, '\n');
 		((SymboleValue*) var)->setValeur(valeur);
-		ajoute(var);
 	}
 
 	return 0;
@@ -295,16 +294,10 @@ void NoeudInstLire::ajoute(Noeud* var) {
 
 void NoeudInstLire::traduitEnCPP(ostream & cout, unsigned int indentation) const {
 
-	for (auto var : m_variables)
-		cout << "cin >> " << ((SymboleValue*) var)->getChaine() << "; ";
-
-
-	//    for (int i = 0 ; i < m_variables.size() ; i++)
-	//    {
-	//	Noeud* var = m_variables[i];
-	//	
-	//	cout << "cin >> " << ((SymboleValue*)var)->getChaine() << "; ";
-	//    }
+    cout << m_variables.size() << endl;
+    
+    for (auto var : m_variables)
+	cout << "cin >> " << ((SymboleValue*) var)->getChaine() << "; ";
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -322,9 +315,10 @@ int NoeudInstEcrire::executer() {
 			str = str.erase(0, 1);
 			str.pop_back();
 
-			cout << str << endl;
+			cout << str;
 		} else cout << p->executer();
 	}
+	cout << endl;
 
 	return 0;
 }
@@ -343,19 +337,6 @@ void NoeudInstEcrire::traduitEnCPP(ostream & cout, unsigned int indentation) con
 			cout << ((SymboleValue*) p)->getChaine();
 		} else p->traduitEnCPP(cout, 0);
 	}
-
-	//    for (int i = 0; i < m_variables.size() ; i++)
-	//    {
-	//	Noeud* p = m_variables[i];
-	//	
-	//	cout << " << ";
-	//	
-	//	if(typeid(*p)==typeid(SymboleValue) && *((SymboleValue*)p)== "<CHAINE>" )
-	//	{
-	//	    cout << ((SymboleValue*)p)->getChaine();
-	//	}
-	//	else p->traduitEnCPP(cout, 0);
-	//    }
 
 	cout << " << endl;";
 }

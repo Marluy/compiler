@@ -2,7 +2,8 @@
 procedure principale()
 
 	x = 1;
-	ecrire(x);
+	ecrire("x = ", x);
+	ecrire("x + 1 = ", x + 1);
 
 finproc
 

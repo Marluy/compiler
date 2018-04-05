@@ -1,6 +1,10 @@
 #test du Lire
 procedure principale()
 	
-	lire(x)); #Problème il faut 2 parenthèse pour lire ?????
+    ecrire("x, y := ");
+    lire(x, y);
+    ecrire("z := ");
+    lire(z);
+    ecrire("x, y, z := ", x, ", ", y, ", ", z);
 
 finproc
