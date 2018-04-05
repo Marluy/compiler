@@ -25,12 +25,8 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <itemPath>a</itemPath>
-      <itemPath>b</itemPath>
       <itemPath>bnf.txt</itemPath>
-      <itemPath>lire_ecrire.txt</itemPath>
       <itemPath>motsCles.txt</itemPath>
-      <itemPath>programme.txt</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -102,19 +98,11 @@
       </item>
       <item path="TableSymboles.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="a" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="b" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="bnf.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lire_ecrire.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="motsCles.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="programme.txt" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -163,19 +151,11 @@
       </item>
       <item path="TableSymboles.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="a" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="b" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="bnf.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="lire_ecrire.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="motsCles.txt" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="programme.txt" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
