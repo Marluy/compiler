@@ -1,23 +1,7 @@
 procedure principale()
-
-    x = 3;
-
-    selon(x)
-	cas 1:
-	    y = 1;
-	    ecrire("cas  1 : y = ", y);
-	cas 2:
-	    y = 1;
-	    ecrire("cas  2 : y = ", y);
-	cas -2:
-	    y = 1;
-	    ecrire("cas -2 : y = ", y);
-	cas -1:
-	    y = 1;
-	    ecrire("cas -1 : y = ", y);
-	defaut:
-	    y = x;
-	    ecrire("defaut : y = ", y);
-    finselon
+    
+    pour( x = 0 ; x < 5 ; x++)
+	ecrire("x = ", x);
+    finpour
 
 finproc

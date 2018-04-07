@@ -55,9 +55,28 @@ int NoeudAffectation::executer()
 
 void NoeudAffectation::traduitEnCPP(ostream & cout, unsigned int indentation) const
 {
-    m_variable->traduitEnCPP(cout, 0);
-    cout << " = ";
-    m_expression->traduitEnCPP(cout, 0);
+   
+    if(	typeid(*m_expression) == typeid(NoeudOperateurBinaire)
+	&&( ((NoeudOperateurBinaire*)m_expression)->getOperateur() == "++"
+	    || ((NoeudOperateurBinaire*)m_expression)->getOperateur() == "--") )
+    {
+	if(((NoeudOperateurBinaire*)m_expression)->getOperandeDroit() == NULL)
+	{
+	    m_variable->traduitEnCPP(cout, 0);
+	    cout << ((NoeudOperateurBinaire*)m_expression)->getOperateur();
+	}
+	else
+	{
+	    cout << ((NoeudOperateurBinaire*)m_expression)->getOperateur();
+	    m_variable->traduitEnCPP(cout, 0);
+	}
+    }	    
+    else
+    {
+	m_variable->traduitEnCPP(cout, 0);
+	cout << " = ";
+	m_expression->traduitEnCPP(cout, 0);
+    }
     cout << ";";
 }
 
@@ -74,8 +93,18 @@ int NoeudOperateurBinaire::executer()
     if ( m_operandeGauche != NULL ) og = m_operandeGauche->executer(); // On évalue l'opérande gauche
     if ( m_operandeDroit != NULL ) od = m_operandeDroit->executer(); // On évalue l'opérande droit
     // Et on combine les deux opérandes en fonctions de l'opérateur
-    if ( this->m_operateur == "+" ) valeur = (og + od);
+	 if ( this->m_operateur == "+" )valeur = (og + od);
     else if ( this->m_operateur == "-" ) valeur = (og - od);
+    else if ( this->m_operateur == "++" )
+    {
+	if ( m_operandeGauche != NULL ) valeur = (og + 1);
+	else				valeur = (od + 1);
+    }
+    else if ( this->m_operateur == "--" )
+    {
+	if ( m_operandeGauche != NULL ) valeur = (og - 1);
+	else				valeur = (od - 1);
+    }
     else if ( this->m_operateur == "*" ) valeur = (og * od);
     else if ( this->m_operateur == "==" ) valeur = (og == od);
     else if ( this->m_operateur == "!=" ) valeur = (og != od);

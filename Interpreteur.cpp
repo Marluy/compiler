@@ -94,6 +94,8 @@ Noeud* Interpreteur::seqInst()
 	sequence->ajoute(inst());
     }
     while( m_lecteur.getSymbole() == "<VARIABLE>" ||
+	    m_lecteur.getSymbole() == "++" ||
+	    m_lecteur.getSymbole() == "--" ||
 	    m_lecteur.getSymbole() == "si" ||
 	    m_lecteur.getSymbole() == "tantque" ||
 	    m_lecteur.getSymbole() == "pour" ||
@@ -108,7 +110,7 @@ Noeud* Interpreteur::seqInst()
 
 Noeud* Interpreteur::inst()
 {// <inst> ::= <affectation> ; | <instSiRiche> | <instTantQue> | <instRepeter> ; | <instPour> | <instEcrire> ; | <instLire> ;
-    if( m_lecteur.getSymbole() == "<VARIABLE>" )
+    if( m_lecteur.getSymbole() == "<VARIABLE>" || m_lecteur.getSymbole() == "++" || m_lecteur.getSymbole() == "--" )
     {
 	Noeud *affect = affectation();
 	testerEtAvancer(";");
@@ -147,14 +149,36 @@ Noeud* Interpreteur::affectation()
 {// <affectation> ::= <variable> = <expression> 
     try
     {
-	tester("<VARIABLE>");
+	if(m_lecteur.getSymbole() == "<VARIABLE>")
+	{
+	    Noeud* var = m_table.chercheAjoute(m_lecteur.getSymbole());
+	    m_lecteur.avancer();	
 
-	Noeud* var = m_table.chercheAjoute(m_lecteur.getSymbole()); // La variable est ajoutée à la table et on la mémorise
-	m_lecteur.avancer();
-	testerEtAvancer("=");
-
-	Noeud* exp = expression(); // On mémorise l'expression trouvée
-	return new NoeudAffectation(var, exp); // On renvoie un noeud affectation
+	    if( m_lecteur.getSymbole() == "=" )
+	    {
+		m_lecteur.avancer();
+		Noeud* exp = expression();
+		return new NoeudAffectation(var, exp);
+	    }
+	    else if( m_lecteur.getSymbole() == "++" || m_lecteur.getSymbole() == "--")
+	    {
+		Symbole operateur = m_lecteur.getSymbole();
+		m_lecteur.avancer();
+		Noeud* operation = new NoeudOperateurBinaire(operateur, var, NULL);
+		return new NoeudAffectation(var, operation);
+	    }
+	}
+	else if(m_lecteur.getSymbole() == "++")
+	{
+	    Symbole operateur = m_lecteur.getSymbole();
+	    m_lecteur.avancer();
+	    tester("<VARIABLE>");
+	    Noeud* var = m_table.chercheAjoute(m_lecteur.getSymbole());
+	    m_lecteur.avancer();
+	    Noeud* operation = new NoeudOperateurBinaire(operateur, NULL, var);
+	    return new NoeudAffectation(var, operation);
+	}
+	else erreur("Instruction incorrecte");
     }
     catch(SyntaxeException s)
     {
@@ -567,4 +591,6 @@ Noeud* Interpreteur::instSelon()
     testerEtAvancer("finselon");
 
     return selon;
-} 
+}
+
+    

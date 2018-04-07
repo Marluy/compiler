@@ -84,13 +84,19 @@ public:
     ~NoeudOperateurBinaire() { } // A cause du destructeur virtuel de la classe Noeud
     int executer(); // Exécute (évalue) l'opération binaire)
     void traduitEnCPP(ostream & cout, unsigned int indentation) const;
-
-private:
-
     inline std::string getOperateur() const
     {
 	return m_operateur.getChaine();
     }
+    
+    inline Noeud* getOperandeDroit() const
+    {
+	return m_operandeDroit;
+    }
+
+private:
+
+    
 
     Symbole m_operateur;
     Noeud* m_operandeGauche;
