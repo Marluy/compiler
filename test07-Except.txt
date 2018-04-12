@@ -11,29 +11,35 @@ x = 1;
 		x = 1;
 	finsi
 
+	ecrire("ok");
+
 	y = 2;
 
 	si y == 2)
 		y ++;
 	finsi
 
+	ecrire("ok");
+
 	tantque y < 10)
 		y++;
 	fintantque
+
+	ecrire("ok");
 
 	pour (x = 0 ; x < 10  x = x + 1)
 	    x = x;
 	finpour
 
-	x = 1
+	ecrire("ok");
+
+	x = 1;
 
 	tantque(x < 10
 		x = x + 1;
 	fintantque
 
-	repeter
-		x  x + 1;
-	jusqua ( x == 10);
+	ecrire("ok");
 
 	selon(x)
 		cas 1
@@ -44,5 +50,10 @@ x = 1;
 			x=0;
 	finselon
 
+	ecrire("ok");
+	
+	#repeter
+	#	x  x + 1;
+	#jusqua ( x == 10);
 
 finproc
