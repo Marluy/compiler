@@ -1,7 +1,0 @@
-procedure principale()
-    
-    pour( x = 0 ; x < 5 ; x++)
-	ecrire("x = ", x);
-    finpour
-
-finproc

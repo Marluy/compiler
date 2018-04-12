@@ -1,0 +1,5 @@
+procedure principale()
+
+	ecrire(3;
+
+finproc

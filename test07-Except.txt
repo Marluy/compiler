@@ -13,13 +13,36 @@ x = 1;
 
 	y = 2;
 
-	si(y == 1)
-		y = y + 1;
-	sinonsi (y > 1)
-		y = y * 2;
-	sinon
-		y = 1;
+	si y == 2)
+		y ++;
 	finsi
+
+	tantque y < 10)
+		y++;
+	fintantque
+
+	pour (x = 0 ; x < 10  x = x + 1)
+	    x = x;
+	finpour
+
+	x = 1
+
+	tantque(x < 10
+		x = x + 1;
+	fintantque
+
+	repeter
+		x  x + 1;
+	jusqua ( x == 10);
+
+	selon(x)
+		cas 1
+			x++;
+		cas 3: 
+			x--;
+	defaut:
+			x=0;
+	finselon
 
 
 finproc

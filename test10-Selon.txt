@@ -1,0 +1,16 @@
+#test du Selon
+procedure principale()
+
+	x = 3;
+	
+	selon(x)
+		cas 1:
+			x++;
+		cas 3: 
+			x--;
+	defaut:
+			x=0;
+	finselon
+
+finproc
+
