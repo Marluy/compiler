@@ -1,5 +1,0 @@
-procedure principale()
-
-	lire(x;
-
-finproc

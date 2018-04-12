@@ -1,0 +1,30 @@
+#test du Selon
+procedure principale()
+
+	ecrire("---test10-Selon---");
+
+### ### ### ### ### ###
+
+	x = -3;
+
+	selon(x)
+		cas 1:
+			x++;
+		cas -3:
+			x--;
+		defaut:
+			x=0;
+	finselon
+	ecrire("[1] x | Attendu -4 | Resultat ", x);
+
+### ### ### ### ### ###
+
+	y = 9;
+
+	selon(y)
+		cas 0:
+			y++;
+	finselon
+ecrire("[2] y | Attendu 9 | Resultat ", y);
+
+finproc

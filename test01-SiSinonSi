@@ -1,24 +1,36 @@
 #test du SiSinonSi
+
 procedure principale()
+
+	ecrire("---test01-SiSinonSi---");
+
+### ### ### ### ### ###
+
 	x = 1;
-	
+
 	si(x == 1)
-		x = x + 1;
+		x++;
 	sinonsi (x > 1)
 		x = x * 2;
 	sinon
 		x = 1;
 	finsi
+	ecrire("[1] x | Attendu 2 | Resultat ", x);
+
+### ### ### ### ### ###
 
 	y = 2;
 
 	si(y == 1)
-		y = y + 1;
+		++y;
 	sinonsi (y > 1)
 		y = y * 2;
 	sinon
 		y = 1;
 	finsi
+	ecrire("[2] y | Attendu 4 | Resultat ", y);
+
+### ### ### ### ### ###
 
 	z = 0;
 
@@ -29,4 +41,6 @@ procedure principale()
 	sinon
 		z = 1;
 	finsi
+	ecrire("[3] z | Attendu 1 | Resultat ", z);
+
 finproc

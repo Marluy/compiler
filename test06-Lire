@@ -1,6 +1,10 @@
 #test du Lire
 procedure principale()
-	
+
+	ecrire("---test06-Lire---");
+
+### ### ### ### ### ###
+
     ecrire("x, y := ");
     lire(x, y);
     ecrire("z := ");

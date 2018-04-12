@@ -74,7 +74,14 @@ Noeud* Interpreteur::programme() {// <programme> ::= procedure principale() <seq
 	testerEtAvancer("(");
 	testerEtAvancer(")");
 	Noeud* sequence = seqInst();
-	testerEtAvancer("finproc");
+	try
+	{
+	    testerEtAvancer("finproc");
+	}
+	catch(SyntaxeException s)
+	{
+	    cout << "Exception levée : " << s.what() << endl;
+	}
 	tester("<FINDEFICHIER>");
 	return sequence;
 }
@@ -101,28 +108,56 @@ Noeud* Interpreteur::seqInst() {// <seqInst> ::= <inst> { <inst> }
 Noeud* Interpreteur::inst() {// <inst> ::= <affectation> ; | <instSiRiche> | <instTantQue> | <instRepeter> ; | <instPour> | <instEcrire> ; | <instLire> ;
 
 	if (m_lecteur.getSymbole() == "<VARIABLE>" || m_lecteur.getSymbole() == "++" || m_lecteur.getSymbole() == "--") {
+	    try
+	    {
 		Noeud *affect = affectation();
 		testerEtAvancer(";");
 		return affect;
+	    }
+	    catch(SyntaxeException e)
+	    {
+		return NULL;
+	    }
 
 	} else if (m_lecteur.getSymbole() == "si") return instSiRiche();
 
 	else if (m_lecteur.getSymbole() == "tantque") return instTantQue();
 
 	else if (m_lecteur.getSymbole() == "repeter") {
+	    try
+	    {
 		Noeud* repet = instRepeter();
 		testerEtAvancer(";");
 		return repet;
+	    }
+	    catch(SyntaxeException e)
+	    {
+		return NULL;
+	    }
 	} else if (m_lecteur.getSymbole() == "pour") return instPour();
 
 	else if (m_lecteur.getSymbole() == "ecrire") {
+	    try
+	    {
 		Noeud* ecrire = instEcrire();
 		testerEtAvancer(";");
 		return ecrire;
+	    }
+	    catch(SyntaxeException e)
+	    {
+		return NULL;
+	    }
 	} else if (m_lecteur.getSymbole() == "lire") {
+	    try
+	    {
 		Noeud* lire = instLire();
 		testerEtAvancer(";");
 		return lire;
+	    }
+	    catch(SyntaxeException e)
+	    {
+		return NULL;
+	    }
 	} else if (m_lecteur.getSymbole() == "selon") return instSelon();
 	else erreur("Instruction incorrecte");
 
@@ -362,9 +397,10 @@ Noeud * Interpreteur::instRepeter() {//<instRepeter> ::= repeter <seqInst> jusqu
 		return new NoeudInstRpt(condition, sequence);
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		while (m_lecteur.getSymbole() != "<FINDEFICHIER>") {
+		while(m_lecteur.getSymbole() != "<FINDEFICHIER>") {
 			m_lecteur.avancer();
 		}
+		    
 		return NULL;
 	}
 
@@ -430,9 +466,7 @@ Noeud * Interpreteur::instLire() {
 		return lire;
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		while (m_lecteur.getSymbole() != "<FINDEFICHIER>") {
-			m_lecteur.avancer();
-		}
+		chercheInst();
 		return NULL;
 	}
 
@@ -464,9 +498,7 @@ Noeud * Interpreteur::instEcrire() {// <instEcrire> ::= ecrire ( <expression> | 
 		return ecrire;
 	} catch (SyntaxeException s) {
 		cout << "Exception levée : " << s.what() << endl;
-		while (m_lecteur.getSymbole() != "<FINDEFICHIER>") {
-			m_lecteur.avancer();
-		}
+		chercheInst();
 		return NULL;
 	}
 
@@ -486,8 +518,6 @@ Noeud * Interpreteur::instSelon() {
 		tester("cas");
 
 		NoeudInstSelon* selon = new NoeudInstSelon(variable);
-
-
 
 		do {
 			Noeud* cas = NULL;

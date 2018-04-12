@@ -1,0 +1,16 @@
+#test du tantque
+procedure principale()
+
+ecrire("---test02-TantQue---");
+
+### ### ### ### ### ###
+
+	x = 0;
+
+	tantque(x < 10)
+		x++;
+	fintantque
+	ecrire("[1] x | Attendu 10 | Resultat ", x);
+
+
+finproc

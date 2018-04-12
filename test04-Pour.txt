@@ -1,9 +1,22 @@
 #test du Pour
 procedure principale()
 
-	
-	pour (x = 0 ; x < 10 ; x = x + 1)
+	ecrire("---test04-Pour---");
+
+### ### ### ### ### ###
+
+	pour (x = 0 ; x < 10 ; x++)
 	    x = x;
 	finpour
+	ecrire("[1] x | Attendu 10 | Resultat ", x);
+
+### ### ### ### ### ###
+
+	y = 10;
+
+	pour (; y > 0 ;)
+	    y--;
+	finpour
+	ecrire("[1] y | Attendu 0 | Resultat ", y);
 
 finproc

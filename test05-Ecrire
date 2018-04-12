@@ -1,0 +1,14 @@
+#test du Ecrire
+procedure principale()
+
+	ecrire("---test05-Ecrire---");
+
+### ### ### ### ### ###
+
+	x = 1;
+	ecrire("x = ", x);
+	ecrire("x + 1 = ", x + 1, " - Puis on affiche 0 et '0' :");
+	ecrire(0);
+	ecrire("0");
+
+finproc

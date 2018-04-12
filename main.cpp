@@ -16,9 +16,6 @@ int main(int argc, char* argv[])
     }
     else nomFich = argv[1];
     
-    //nomFich = "programme.txt";
-    //nomFich = "a";
-    
     ifstream fichier(nomFich.c_str());
     
     try
@@ -35,7 +32,9 @@ int main(int argc, char* argv[])
 	// Et on vérifie qu'il a fonctionné en regardant comment il a modifié la table des symboles
 	cout << endl << "================ Table des symboles apres exécution : " << interpreteur.getTable();
 	cout << endl << "================ Code C++ généré : " << endl;
-	if (interpreteur.getArbre() != NULL) interpreteur.traduitEnCPP(cout);
+	cout << nomFich + ".cpp" << endl;
+	ofstream fichiercpp(nomFich + ".cpp", ios::out | ios::trunc);
+	if (interpreteur.getArbre() != NULL) interpreteur.traduitEnCPP(fichiercpp);
     }
     catch (InterpreteurException & e)
     {

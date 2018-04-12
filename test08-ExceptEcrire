@@ -1,0 +1,23 @@
+procedure principale()
+
+	ecrire("---test08-ExceptEcrire---");
+
+### ### ### ### ### ###
+
+	ecrire(3;
+
+	ecrire("[1] ok 1/3");
+
+### ### ### ### ### ###
+
+	ecrire();
+
+	ecrire("[2] ok 2/3");
+
+### ### ### ### ### ###
+
+	ecrire("chaine")
+
+	ecrire("[3] ok 3/3");
+
+finproc

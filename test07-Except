@@ -1,8 +1,12 @@
 #fichier de test des exceptions
 procedure principale()
 
+	ecrire("---test07-Except---");
+
+### ### ### ### ### ###
+
 x = 1;
-	
+
 	si x == 1) #On doit lever une exception et continuer
 		x = x + 1;
 	sinonsi (x > 1)
@@ -11,7 +15,9 @@ x = 1;
 		x = 1;
 	finsi
 
-	ecrire("ok");
+	ecrire("[1] ok 1/6");
+
+### ### ### ### ### ###
 
 	y = 2;
 
@@ -19,19 +25,27 @@ x = 1;
 		y ++;
 	finsi
 
-	ecrire("ok");
+	ecrire("[2] ok 2/6");
+
+### ### ### ### ### ###
 
 	tantque y < 10)
 		y++;
 	fintantque
 
-	ecrire("ok");
+### ### ### ### ### ###
+
+	ecrire("[3] ok 3/6");
 
 	pour (x = 0 ; x < 10  x = x + 1)
 	    x = x;
 	finpour
 
-	ecrire("ok");
+### ### ### ### ### ###
+
+	ecrire("[4] ok 4/6");
+
+### ### ### ### ### ###
 
 	x = 1;
 
@@ -39,21 +53,19 @@ x = 1;
 		x = x + 1;
 	fintantque
 
-	ecrire("ok");
+	ecrire("[5] ok 5/6");
+
+### ### ### ### ### ###
 
 	selon(x)
 		cas 1
 			x++;
-		cas 3: 
+		cas 3:
 			x--;
 	defaut:
 			x=0;
 	finselon
 
-	ecrire("ok");
-	
-	#repeter
-	#	x  x + 1;
-	#jusqua ( x == 10);
+	ecrire("[6] ok 6/6");
 
 finproc

@@ -1,0 +1,29 @@
+procedure principale()
+
+	ecrire("---test09-ExceptLire---");
+
+### ### ### ### ### ###
+
+	lire(x;
+
+	ecrire("[1] ok 1/4");
+
+### ### ### ### ### ###
+
+	lire();
+
+	ecrire("[2] ok 2/4");
+
+### ### ### ### ### ###
+
+	lire(x, )
+
+	ecrire("[3] ok 3/4");
+
+### ### ### ### ### ###
+
+	lire(x)
+
+	ecrire("[4] ok 4/4");
+
+finproc

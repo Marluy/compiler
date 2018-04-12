@@ -364,7 +364,7 @@ void NoeudInstEcrire::traduitEnCPP(ostream & cout, unsigned int indentation) con
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// NoeudInstEcrire
+// NoeudInstSelon
 ////////////////////////////////////////////////////////////////////////////////
 
 NoeudInstSelon::NoeudInstSelon(Noeud* variable)
@@ -378,12 +378,14 @@ void NoeudInstSelon::ajoute(Noeud* cas, Noeud* sequence) {
 int NoeudInstSelon::executer() {
 
 	auto it = m_sequences.begin();
+	
+	cout << "###################### " << m_sequences.size() << endl;
 
 	while (it != m_sequences.end() && m_variable->executer() != it->first->executer())
 		it++;
 
-	if (it != m_sequences.end()) m_defaut->executer();
-	else if (m_defaut != NULL) it->second->executer();
+	if (it != m_sequences.end()) it->second->executer();
+	else if (m_defaut != NULL) m_defaut->executer();
 
 	return 0;
 }

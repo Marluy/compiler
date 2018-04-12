@@ -1,9 +1,0 @@
-#test du repeter
-procedure principale()
-	x = 1;
-	
-	repeter
-		x = x + 1;
-	jusqua ( x == 10);
-
-finproc

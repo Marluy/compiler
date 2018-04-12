@@ -1,0 +1,15 @@
+#test du repeter
+procedure principale()
+
+ecrire("---test03-Repeter---");
+
+### ### ### ### ### ###
+
+	x = 0;
+
+	repeter
+		x++;
+	jusqua(x >= 5);
+	ecrire("[1] x | Attendu 5 | Resultat ", x);
+
+finproc
